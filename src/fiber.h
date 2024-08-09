@@ -7,12 +7,14 @@
 
 #define fiber() frame->fiber
 
-#define fiber_yield()       						  	\
-        do {								  	\
-    		ctx->line = __LINE__;						\
+#define fiber_yield_impl(x)							\
+	do {									\
+    		ctx->line = x;							\
     		fiber()->in_yield = true;				 	\
-    		return fiber_yield_value; case __LINE__:;			\
+    		return fiber_yield_value; case x:;				\
         } while (0)
+
+#define fiber_yield() fiber_yield_impl(__COUNTER__)
 
 #define fiber_call(r, f, ...) 							\
 	do {           								\

@@ -6,7 +6,7 @@ fiber_func_decl_begin(int, bar, int v)
 	    int i;
 	fiber_end_context;
 	fiber_func_body_begin;
-		for(ctx->i = 0; ctx->i < 5; ctx->i++) {
+		for (ctx->i = 0; ctx->i < 5; ctx->i++) {
 			printf("%d ", v);
 			fflush(stdout);
 			fiber_yield();
@@ -18,15 +18,15 @@ fiber_func_decl_end
 
 fiber_func_decl_begin(int, foo, int from)
 	fiber_begin_context;
-	int i;
+	    int i;
 	fiber_end_context;
 	fiber_func_body_begin;
-	for(ctx->i = from; ctx->i < from + 2; ctx->i++) {
-		int ret;
-		fiber_call(ret, bar, ctx->i);
-		fiber_yield();
-	}
-	fiber_return(0);
+		for (ctx->i = from; ctx->i < from + 2; ctx->i++) {
+			int ret;
+			fiber_call(ret, bar, ctx->i);
+			fiber_yield();
+		}
+		fiber_return(0);
 	fiber_func_body_end;
 fiber_func_decl_end
 
