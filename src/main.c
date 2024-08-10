@@ -1,7 +1,9 @@
-#include <stdio.h>
+#include "stdio.h"
 #include "fiber.h"
 
-fiber_func_decl_begin(int, bar, int v)
+int
+bar(fiber_args(int v))
+{
 	fiber_begin_context;
 	    int i;
 	fiber_end_context;
@@ -14,9 +16,10 @@ fiber_func_decl_begin(int, bar, int v)
 		printf("\n");
 		fiber_return(0);
 	fiber_func_body_end;
-fiber_func_decl_end
+}
 
-fiber_func_decl_begin(int, foo, int from)
+int
+foo(fiber_args(int from)) {
 	fiber_begin_context;
 	    int i;
 	fiber_end_context;
@@ -28,7 +31,7 @@ fiber_func_decl_begin(int, foo, int from)
 		}
 		fiber_return(0);
 	fiber_func_body_end;
-fiber_func_decl_end
+}
 
 int
 main (void)

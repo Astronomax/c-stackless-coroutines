@@ -25,12 +25,17 @@ fiber_new(const char *name, fiber_func f)
 	fiber->name = name;
 	fiber->f = f;
 	rlist_create(&fiber->stack);
+	rlist_add_tail_entry(&fiber->stack, fiber_stack_frame_new(fiber), in_stack);
 	return fiber;
 }
 
 void
 fiber_del(struct fiber *fiber)
 {
+	struct fiber_stack_frame *first_frame =
+		rlist_first_entry(&fiber->stack, struct fiber_stack_frame, in_stack);
+	rlist_del_entry(first_frame, in_stack);
+	fiber_stack_frame_del(first_frame);
 	assert(rlist_empty(&fiber->stack));
 	free(fiber);
 }
